@@ -4,9 +4,6 @@ package com.javarush.task.pro.task14.task1417;
 Валидатор даты
 */
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -27,39 +24,22 @@ public class Solution {
     }
 
     public static void checkDateFormat(String date) {
-        //напишите тут ваш код
-        try{
-            SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-            Date dat = formatter.parse(date);
-        } catch (InvalidDateFormatException) {
-            throw new InvalidDateFormatException;
+        if (!date.matches("\\d{2}\\.\\d{2}\\.\\d{4}")) {
+            throw new InvalidDateFormatException();
         }
-
     }
 
     public static void checkYearValue(String date) {
-        //напишите тут ваш код
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        try{
-            Date dat = formatter.parse(date);
-            int dateDate = dat.getYear();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        int year = Integer.parseInt(date.substring(date.lastIndexOf('.') + 1));
+        if (year < 1900 || year > 2100) {
+            throw new InvalidYearValueException();
         }
     }
 
     public static void checkMonthValue(String date) {
-        //напишите тут ваш код
-        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy");
-        try{
-            Date dat = formatter.parse(date);
-            //возвращает месяц при отсчете с 0, поэтому прибавляем 1.
-            int dateDate = dat.getMonth() + 1;
-            if (dateDate > 12 || dateDate < 1){
-
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
+        int month = Integer.parseInt(date.substring(date.indexOf('.') + 1, date.lastIndexOf('.')));
+        if (month < 1 || month > 12) {
+            throw new InvalidMonthValueException();
         }
     }
 
@@ -78,6 +58,12 @@ public class Solution {
             put(11, 30);
             put(12, 31);
         }};
-        //напишите тут ваш код
+        String[] split = date.split("\\.");
+        int day = Integer.parseInt(split[0]);
+        int month = Integer.parseInt(split[1]);
+        int daysInMonth = months.get(month);
+        if (day < 1 || day > daysInMonth) {
+            throw new InvalidDayValueException();
+        }
     }
 }
