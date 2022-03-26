@@ -13,10 +13,10 @@ public class Solution {
     }
 
     public static void printStackTrace(StackTraceElement[] stackTrace) {
-        //напишите тут ваш код
-        for (var element : stackTrace) {
-            System.out.println(String.format(OUTPUT_FORMAT, element.getMethodName(), element.getLineNumber(),
-                    element.getClassName(), element.getFileName()));
+        for (StackTraceElement element : stackTrace) {
+            System.out.printf(OUTPUT_FORMAT, element.getMethodName(), 
+                    element.getLineNumber(), element.getClassName(), 
+                    element.getFileName());
         }
     }
 
