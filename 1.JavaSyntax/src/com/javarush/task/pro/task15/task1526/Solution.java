@@ -20,6 +20,7 @@ public class Solution {
             }
         } catch (IOException e) {
             System.out.println("Something went wrong" + e);
+            System.out.println("hello");
         }
     }
 }
